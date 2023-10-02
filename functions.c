@@ -3,7 +3,7 @@
 
 #define BLINK_DELAY_MS 1000
 
-vid lightUp(){
+void lightUp(){
     PORTB |= (PORTB5);
     _delay_ms(BLINK_DELAY_MS);
 }
