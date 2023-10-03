@@ -4,7 +4,7 @@
 #define BLINK_DELAY_MS 1000
 
 void lightUp(){
-    PORTB |= (PORTB5);
+    PORTB |= _BV(PORTB5);
     _delay_ms(BLINK_DELAY_MS);
 }
 void lightDown(){
