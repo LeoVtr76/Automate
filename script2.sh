@@ -39,7 +39,6 @@ for c in *.c;do
     [ -f "$c" ] || break
     avr-gcc -Os -DF_CPU=16000000UL -mmcu=atmega328p -c $c -o .tmp/${c%.*}.o
     filesC="$filesC .tmp/${c%.*}.o"
-    printf "$filesC"
 done
 printf 'P3'
 avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p $filesC -o build/$FOLDER 2> /dev/null
@@ -47,4 +46,15 @@ printf '. done [links]\n'
 printf 'P4'
 avr-objcopy -O ihex -R .eeprom build/$FOLDER build/$FOLDER.hex
 printf '. done [.hex]\n'
+printf "Voulez vous commencer le televersement [Y/N] ?"
+read -r TELEV
+if [[ $TELEV == 'Y' ]];then
+    printf "Démarrage du teléversement \n"
+    avrdude -F -V -c arduino -p ATMEGA328P -P /dev/tty.usbmodem14301 -b 115200 -U flash:w:build/$FOLDER.hex
+
+else
+    printf "Bye\n"
+    exit
+fi
+
 exit
